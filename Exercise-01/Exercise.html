@@ -1,0 +1,66 @@
+<html>
+
+</html>
+
+<body>
+	<canvas id="canvas" style="border: 1px solid;" width="300" height="300">
+	</canvas>
+
+	<script>
+		var canvas = document.getElementById('canvas');
+		var context = canvas.getContext('2d');
+
+		function drawCurvedLine() {
+			context.save();
+			context.translate(-20, 345);
+			context.beginPath();
+
+			context.moveTo(0, 0);
+			context.quadraticCurveTo(150, -40, 240, -180);
+			context.quadraticCurveTo(310, -250, 410, -250);
+
+			context.strokeStyle = '#663300';
+			context.lineWidth = 30;
+			context.stroke();
+		}
+
+		function drawSky() {
+			context.rect(0, 0, 300, 100);
+			context.strokeStyle = '#5995f7';
+			context.lineWidth = 0;
+			context.fillStyle = '#5995f7';
+			context.fill();
+			context.stroke();
+		}
+
+		function drawSun() {
+			context.beginPath();
+			context.arc(120, 50, 30, 0, 2 * Math.PI);
+			context.strokeStyle = '#fcf158';
+			context.lineWidth = 4;
+			context.fillStyle = '#fcf158';
+			context.fill();
+			context.stroke();
+		}
+
+		function drawTree() {
+			context.lineWidth = 4;
+			context.lineJoin = 'round';
+			context.strokeStyle = '#663300';
+			context.stroke();
+			context.fillStyle = '#339900';
+			context.fill();
+			context.fillStyle = '#663300';
+			context.fillRect(-5, -50, 10, 50);
+		}
+
+		function drawPainting() {
+			drawSky();
+			drawSun();
+			drawCurvedLine();
+			//drawTree();
+		}
+
+		window.addEventListener("load", drawPainting, true);
+	</script>
+</body>
