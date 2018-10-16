@@ -48,13 +48,13 @@
 		}
 
 		function drawHouse() {
-			//"rdzen" budynku
+			// "rdzen" budynku
 			context.beginPath();
 			context.rect(60, 120, 100, 70);
 
 			context.strokeStyle = '#160c02';
 			context.lineWidth = 1;
-			context.fillStyle = '#633308';
+			context.fillStyle = '#934e13';
 
 			context.fill();
 			context.stroke();
@@ -80,7 +80,7 @@
 		}
 
 		function drawDoors() {
-			// doors
+			// drzwi
 			context.beginPath();
 			context.rect(100, 135, 30, 55);
 
@@ -91,7 +91,7 @@
 			context.fill();
 			context.stroke();
 
-			//handle
+			// klamka
 			context.beginPath();
 			context.moveTo(105, 160);
 			context.lineTo(115, 160);
@@ -114,18 +114,33 @@
 			context.stroke();
 		}
 
-		function drawTree() {
+		function drawTree(x, y) {
 
-			// Główna część choinki
+			// Główna część drzewa
 			context.beginPath();
-			context.moveTo(55, 130);
-			context.lineTo(75, 210);
-			context.lineTo(35, 210);
+			context.moveTo(x, y);
+			context.lineTo(x + 20, y + 80);
+			context.lineTo(x - 20, y + 80);
 			context.closePath();
 
 			context.strokeStyle = '#001901';
 			context.lineWidth = 1;
 			context.fillStyle = '#07930d';
+
+			context.fill();
+			context.stroke();
+
+			// Pień
+			context.beginPath();
+			context.moveTo(x - 5, y + 80);
+			context.lineTo(x + 5, y + 80);
+			context.lineTo(x + 5, y + 105);
+			context.lineTo(x - 5, y + 105);
+			context.closePath();
+
+			context.strokeStyle = '#160c02';
+			context.lineWidth = 1;
+			context.fillStyle = '#633308';
 
 			context.fill();
 			context.stroke();
@@ -136,7 +151,10 @@
 			drawSun();
 			drawCloud();
 			drawHouse();
-			drawTree();
+			drawTree(55, 130);
+			drawTree(30, 150);
+			drawTree(260, 170);
+			drawTree(240, 190);
 			drawCurvedLine();
 		}
 
