@@ -3,7 +3,7 @@
 </html>
 
 <body>
-	<canvas id="canvas" style="border: 1px solid;" width="300" height="300">
+	<canvas id="canvas" style="border: 1px solid; background: green" width="300" height="300">
 	</canvas>
 
 	<script>
@@ -11,7 +11,6 @@
 		var context = canvas.getContext('2d');
 
 		function drawCurvedLine() {
-			context.save();
 			context.translate(-20, 345);
 			context.beginPath();
 
@@ -25,10 +24,13 @@
 		}
 
 		function drawSky() {
+			context.beginPath();
 			context.rect(0, 0, 300, 100);
+
 			context.strokeStyle = '#5995f7';
 			context.lineWidth = 0;
 			context.fillStyle = '#5995f7';
+
 			context.fill();
 			context.stroke();
 		}
@@ -36,29 +38,106 @@
 		function drawSun() {
 			context.beginPath();
 			context.arc(120, 50, 30, 0, 2 * Math.PI);
+
 			context.strokeStyle = '#fcf158';
 			context.lineWidth = 4;
 			context.fillStyle = '#fcf158';
+
+			context.fill();
+			context.stroke();
+		}
+
+		function drawHouse() {
+			//"rdzen" budynku
+			context.beginPath();
+			context.rect(60, 120, 100, 70);
+
+			context.strokeStyle = '#160c02';
+			context.lineWidth = 1;
+			context.fillStyle = '#633308';
+
+			context.fill();
+			context.stroke();
+
+			drawRoof();
+			drawDoors();
+		}
+
+		function drawRoof() {
+			context.beginPath();
+			context.moveTo(80, 90);
+			context.lineTo(40, 120);
+			context.lineTo(180, 120);
+			context.lineTo(140, 90);
+			context.closePath();
+
+			context.strokeStyle = '#160c02';
+			context.lineWidth = 1;
+			context.fillStyle = '#160c02';
+
+			context.fill();
+			context.stroke();
+		}
+
+		function drawDoors() {
+			// doors
+			context.beginPath();
+			context.rect(100, 135, 30, 55);
+
+			context.strokeStyle = '#160c02';
+			context.lineWidth = 1;
+			context.fillStyle = '#633308';
+
+			context.fill();
+			context.stroke();
+
+			//handle
+			context.beginPath();
+			context.moveTo(105, 160);
+			context.lineTo(115, 160);
+
+			context.strokeStyle = '#160c02';
+			context.lineWidth = 2;
+
+			context.stroke();
+		}
+
+		function drawCloud() {
+			context.beginPath();
+			context.ellipse(150, 75, 50, 20, 0, 0, 2 * Math.PI);
+
+			context.strokeStyle = '#dbe8ff';
+			context.lineWidth = 1;
+			context.fillStyle = '#dbe8ff';
+
 			context.fill();
 			context.stroke();
 		}
 
 		function drawTree() {
-			context.lineWidth = 4;
-			context.lineJoin = 'round';
-			context.strokeStyle = '#663300';
-			context.stroke();
-			context.fillStyle = '#339900';
+
+			// Główna część choinki
+			context.beginPath();
+			context.moveTo(55, 130);
+			context.lineTo(75, 210);
+			context.lineTo(35, 210);
+			context.closePath();
+
+			context.strokeStyle = '#001901';
+			context.lineWidth = 1;
+			context.fillStyle = '#07930d';
+
 			context.fill();
-			context.fillStyle = '#663300';
-			context.fillRect(-5, -50, 10, 50);
+			context.stroke();
 		}
 
 		function drawPainting() {
 			drawSky();
 			drawSun();
+			drawCloud();
+			drawHouse();
+			drawTree();
 			drawCurvedLine();
-			//drawTree();
 		}
 
 		window.addEventListener("load", drawPainting, true);
