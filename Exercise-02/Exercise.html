@@ -1,0 +1,179 @@
+<html>
+
+<head>
+</head>
+
+<body>
+	<canvas id="painting" width="400" height="400" style="border: solid 1px black;">
+		Your browser is too old.
+	</canvas>
+	<div>
+		<p>Colors:</p>
+		<button id="violet">Violet</button>
+		<button id="green">Green</button>
+		<button id="yellow">Yellow</button>
+		<button id="brown">Brown</button>
+	</div>
+
+	<div>
+		<p>Pen sizes:</p>
+		<button id="small">Small</button>
+		<button id="medium">Medium</button>
+		<button id="big">Big</button>
+		<button id="huge">Huge</button>
+	</div>
+
+	<div>
+		<p>Other:</p>
+		<button id="resetContent">Reset</button>
+		<button id="rubber">Rubber</button>
+		<button id="pen">Pen</button>
+		<button id="zoomIn">Zoom In</button>
+		<button id="zoomOut">Zoom Out</button>
+	</div>
+
+	<script type="text/javascript">
+		var clickX = new Array();
+		var clickY = new Array();
+		var clickDrag = new Array();
+		var paint = false;
+		var canvas = document.getElementById('painting');
+		var context = canvas.getContext('2d');
+		var currentWidth = canvas.width;
+		var currentHeight = canvas.height;
+
+		var archiveColor = null;
+		const colorPurple = "#cb3594";
+		const colorGreen = "#659b41";
+		const colorYellow = "#ffcf33";
+		const colorBrown = "#986928";
+		var curColor = colorPurple;
+		var clickColor = new Array();
+
+		var clickSize = new Array();
+		var curSize = 5;
+
+		resetContent.onclick = function () {
+			clickX = new Array();
+			clickY = new Array();
+			clickDrag = new Array();
+			clickColor = new Array();
+			redraw();
+		}
+
+		rubber.onclick = function () {
+			archiveColor = curColor;
+			curColor = "#ffffff";
+		}
+
+		pen.onclick = function () {
+			if (archiveColor != null) {
+				curColor = archiveColor;
+			}
+			else {
+				return;
+			}
+		}
+
+		zoomIn.onclick = function () {
+			context.transform(1.1, 0, 0, 1.1, 0, 0);
+			context.clearRect(0, 0, canvas.width, canvas.height);
+			redraw();
+		}
+
+		zoomOut.onclick = function () {
+			context.transform(0.9, 0, 0, 0.9, 0, 0);
+			context.clearRect(0, 0, canvas.width, canvas.height);
+			redraw();
+		}
+
+		small.onclick = function () {
+			curSize = 3;
+		}
+
+		medium.onclick = function () {
+			curSize = 5;
+		}
+
+		big.onclick = function () {
+			curSize = 7;
+		}
+
+		huge.onclick = function () {
+			curSize = 9;
+		}
+
+		violet.onclick = function () {
+			curColor = colorPurple;
+		}
+
+		green.onclick = function () {
+			curColor = colorGreen;
+		}
+
+		yellow.onclick = function () {
+			curColor = colorYellow;
+		}
+
+		brown.onclick = function () {
+			curColor = colorBrown;
+		}
+
+		canvas.onmousedown = function (e) {
+			paint = true;
+			addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, false);
+			redraw();
+		}
+
+		canvas.onmousemove = function (e) {
+			if (paint) {
+				if ((e.pageX >= 0 && e.pageX <= 400) && (e.pageY >= 0 && e.pageY <= 400)) {
+					addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
+					redraw();
+				}
+				else {
+					paint = false;
+				}
+			}
+		}
+
+		canvas.onmouseup = function () {
+			paint = false;
+		}
+
+		function addClick(x, y, dragging) {
+			clickX.push(x);
+			clickY.push(y);
+			clickDrag.push(dragging);
+			clickColor.push(curColor);
+			clickSize.push(curSize);
+		}
+
+		function redraw() {
+			context.clearRect(0, 0, 400, 400);
+			context.lineJoin = "round";
+
+			for (var i = 0; i < clickX.length; i++) {
+				context.beginPath();
+				if (clickDrag[i]) {
+					context.moveTo(clickX[i - 1], clickY[i - 1]);
+				} else {
+					context.moveTo(clickX[i], clickY[i]);
+				}
+				context.lineTo(clickX[i], clickY[i]);
+				context.closePath();
+				context.strokeStyle = clickColor[i];
+
+				context.lineWidth = clickSize[i];
+				context.stroke();
+			}
+		}
+
+		function reset() {
+			context.clearRect(0, 0, 400, 400);
+		}
+
+	</script>
+</body>
+
+</html>
