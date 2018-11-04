@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<p id="title">NEFFEX - Careless.mp3</p>
+<audio id="myAudio" autoplay controls>
+	<source id="source" src="NEFFEX - Careless.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+	var title = document.getElementById("title");
+	var audio = document.getElementById("myAudio");
+	var source = document.getElementById("source");
+	var lastSelected = 0;
+	var musicList = [
+		"NEFFEX - Careless.mp3",
+		"Daft Punk - Harder, Better, Faster, Stronger (Far Out Remix).mp3",
+		"NEFFEX - Rumors.mp3",
+		"NEFFEX- Failure.mp3",
+		"NEFFEX - Cold.mp3"
+	]
+
+
+	window.setInterval(function () {
+		var startAt = Math.floor(Math.random() * 181);
+		var next;
+
+		do {
+			next = Math.floor(Math.random() * 5);
+		} while (next == lastSelected)
+
+		source.src = musicList[next];
+		title.innerHTML = musicList[next];
+		lastSelected = next;
+
+		audio.load();
+		audio.currentTime = startAt;
+		audio.play();
+	}, 30000);
+
+</script>
+
+</html>
