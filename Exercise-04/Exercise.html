@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<style>
+		div.formDiv {
+			width: 40%;
+		}
+
+		input.textInput {
+			width: 50%;
+			min-width: 200px;
+		}
+
+		textarea {
+			width: 50%;
+			min-width: 200px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="formDiv">
+		<form name="personalForm" id="perForm" action="http://www.tomaszx.pl/materialy/test_przesylania.php" method="POST">
+			<fieldset>
+				<legend>Personal information:</legend>
+				First name:<br>
+				<input type="text" class="textInput" id="nick" name="nick" minlength="3" maxlength="15"><br>
+			</fieldset>
+			<fieldset>
+				<legend>Contact information:</legend>
+				WWW address:<br>
+				<input type="text" class="textInput" id="wwwAddress" minlength="5" name="miasto" maxlength="150"><br>
+				E-mail:<br>
+				<input type="text" class="textInput" id="email" minlength="5" name="email" maxlength="150"><br>
+				GG number:<br>
+				<input type="text" class="textInput" id="ggNumber" minlength="8" name="telefon" maxlength="11">
+			</fieldset>
+			<fieldset>
+				<legend>Other:</legend>
+				Comment:<br>
+				<textarea id="comment" minlength="10" name="komentarz" cols="50" rows="5" maxlength="250"></textarea>
+			</fieldset>
+			<input type="submit" value="Submit" onclick="return validation()">
+			<input type="reset" value="Reset">
+		</form>
+	</div>
+
+	<script type="text/javascript">
+
+		var nick = document.getElementById("nick");
+		var wwwAddress = document.getElementById("wwwAddress");
+		var email = document.getElementById("email");
+		var ggNumber = document.getElementById("ggNumber");
+		var comment = document.getElementById("comment");
+		var validationAlert = "";
+
+		function validation() {
+			if (nick.value.length < 1)
+				validationAlert += "Nick can't be empty! \n";
+
+			if (nick.value.length >= 1 && nick.value.length < 3)
+				validationAlert += "Nick must be at least 3 characters long! \n";
+
+			if (wwwAddress.value.length < 1)
+				validationAlert += "WWW address can't be empty! \n";
+
+			if (wwwAddress.value.length >= 1 && wwwAddress.value.length < 5)
+				validationAlert += "WWW address must be at least 5 characters long! \n";
+
+			if (email.value.length < 1)
+				validationAlert += "E-mail can't be empty! \n";
+
+			if (email.value.length >= 1 && email.value.length < 5)
+				validationAlert += "E-mail must be at least 5 characters long! \n";
+
+			if (ggNumber.value.length < 1)
+				validationAlert += "GG number can't be empty! \n";
+
+			if (ggNumber.value.length >= 1 && ggNumber.value.length < 8)
+				validationAlert += "GG number must be at least 8 characters long! \n";
+
+			if (comment.value.length < 1)
+				validationAlert += "Comment can't be empty! \n";
+
+			if (comment.value.length >= 1 && comment.value.length < 10)
+				validationAlert += "Comment must be at least 10 characters long! \n";
+
+			if (validationAlert == "")
+				return true;
+
+			alert(validationAlert);
+			validationAlert = "";
+			return false;
+		}
+
+	</script>
+</body>
+
+</html>
