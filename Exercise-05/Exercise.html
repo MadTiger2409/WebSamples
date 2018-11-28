@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Rejestracja</title>
+	<style>
+		div.formDiv {
+			width: 50%;
+			border-style: solid;
+			border-color: black;
+			border-width: thin;
+			padding: 1%;
+		}
+
+		input.textInput {
+			width: 50%;
+			min-width: 200px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="formDiv">
+		<h3>Registration</h3>
+		<form name="registration" id="registrationForm" action="http://www.tomaszx.pl/materialy/test_przesylania.php" method="POST">
+			<fieldset>
+				<legend>Personal information:</legend>
+				Nick:<br>
+				<input type="text" class="textInput" id="nick" name="nick" minlength="5" maxlength="30" required pattern="[A-Za-z]\S{5,30}"
+				 title="Five to thirty letters nick."><br>
+				Password:<br>
+				<input type="password" class="textInput" id="password" name="password" minlength="8" maxlength="50" required
+				 pattern=".\S{8,50}" title="Eight to fifty password characters"><br>
+
+			</fieldset>
+			<fieldset>
+				<legend>Contact information:</legend>
+				E-mail:<br>
+				<input type="email" class="textInput" id="email" minlength="5" name="email" maxlength="150" required><br>
+				GG number:<br>
+				<input type="text" class="textInput" id="ggNumber" minlength="8" name="ggNumber" maxlength="11" required pattern="[0-9]\S{8,11}"
+				 title="Eight to eleven GG number.">
+			</fieldset>
+			<hr>
+
+			<input type="submit" value="Submit">
+			<input type="reset" value="Reset">
+		</form>
+	</div>
+</body>
+
+</html>
