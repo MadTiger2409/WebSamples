@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<style>
+	table,
+	th,
+	td {
+		border: 1px solid black;
+		border-collapse: collapse;
+	}
+
+	th,
+	td {
+		padding: 5px;
+	}
+
+	div {
+		margin-top: 10px;
+	}
+</style>
+
+<head>
+	<meta charset="UTF-8">
+</head>
+
+<body>
+
+	<h1>Zamówienia</h1>
+
+	<table id="tabela">
+		<tr>
+			<th>Osoba</th>
+			<th>Ciasto</th>
+			<th>Wielkość</th>
+			<th>Składnik nr 1</th>
+			<th>Składnik nr 2</th>
+			<th>Składnik nr 3</th>
+			<th>Sos</th>
+		</tr>
+	</table>
+	</br>
+	<h4>Koszt:</h4>
+	<div id="costPerPerson"></div>
+
+	<p id="count">Ilość zamówień: </p>
+	<p id="totalCost">Suma zamówień: </p>
+
+	<h4>Składniki:</h4>
+	<ul>
+		<li id="cheese">Ser: </li>
+		<li id="mushrooms">Pieczarki: </li>
+		<li id="beef">Wołowina: </li>
+		<li id="corn">Kukurydza: </li>
+		<li id="salami">Salami: </li>
+		<li id="ham">Szynka: </li>
+		<li id="pepper">Papryka: </li>
+		<li id="chicken">Kurczak: </li>
+		<li id="olives">Oliwki: </li>
+		<li id="cucumber">Ogórek: </li>
+	</ul>
+
+	<script>
+		var ordersCount = 0;
+		var ordersCost = 0;
+
+		var cheeseCount = 0;
+		var mushroomsCount = 0;
+		var beefCount = 0;
+		var cornCount = 0;
+		var salamiCount = 0;
+		var hamCount = 0;
+		var pepperCount = 0;
+		var chickenCount = 0;
+		var olivesCount = 0;
+		var cucumberCount = 0;
+
+		var costPerPerson = "";
+		var table = "";
+		var xmlDoc;
+		var x;
+
+		function loadData() {
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function () {
+				if (this.readyState == 4 && this.status == 200) {
+					workOnData(this);
+				}
+			};
+			xhttp.open("GET", "Orders.xml", true);
+			xhttp.send();
+		}
+
+		function workOnData(xml) {
+			xmlDoc = xml.responseXML;
+			x = xmlDoc.getElementsByTagName("zamowienie");
+			ordersCount = x.length;
+			collectData();
+			drawData();
+		}
+
+		function collectData() {
+			var i;
+			for (i = 0; i < x.length; i++) {
+				constructTable(x[i]);
+				constructCostPerPerson(x[i]);
+				ordersCost += parseInt(x[i].getElementsByTagName("cena")[0].childNodes[0].nodeValue);
+				constructProductsRanking(x[i].getElementsByTagName("skladnik1")[0].childNodes[0].nodeValue);
+				constructProductsRanking(x[i].getElementsByTagName("skladnik2")[0].childNodes[0].nodeValue);
+				constructProductsRanking(x[i].getElementsByTagName("skladnik3")[0].childNodes[0].nodeValue);
+			}
+		}
+
+		function constructTable(source) {
+			table += "<tr><td>" +
+				source.getElementsByTagName("osoba")[0].childNodes[0].nodeValue +
+				"</td><td>" +
+				source.getElementsByTagName("ciasto")[0].childNodes[0].nodeValue +
+				"</td><td>" +
+				source.getElementsByTagName("wielkosc")[0].childNodes[0].nodeValue +
+				"</td><td>" +
+				source.getElementsByTagName("skladnik1")[0].childNodes[0].nodeValue +
+				"</td><td>" +
+				source.getElementsByTagName("skladnik2")[0].childNodes[0].nodeValue +
+				"</td><td>" +
+				source.getElementsByTagName("skladnik3")[0].childNodes[0].nodeValue +
+				"</td><td>" +
+				source.getElementsByTagName("sos")[0].childNodes[0].nodeValue +
+				"</td></tr>";
+		}
+
+		function constructCostPerPerson(source) {
+			costPerPerson += source.getElementsByTagName("osoba")[0].childNodes[0].nodeValue +
+				": " +
+				source.getElementsByTagName("cena")[0].childNodes[0].nodeValue +
+				"</br>"
+		}
+
+		function constructProductsRanking(source) {
+			switch (source) {
+				case "Ser":
+					cheeseCount++;
+					break;
+				case "Pieczarki":
+					mushroomsCount++;
+					break;
+				case "Wolowina":
+					beefCount++;
+					break;
+				case "Kukurydza":
+					cornCount++;
+					break;
+				case "Salami":
+					salamiCount++;
+					break;
+				case "Szynka":
+					hamCount++;
+					break;
+				case "Papryka":
+					pepperCount++;
+					break;
+				case "Kurczak":
+					chickenCount++;
+					break;
+				case "Oliwki":
+					olivesCount++;
+					break;
+				case "Ogorek":
+					cucumberCount++;
+					break;
+			}
+		}
+
+		function drawData() {
+			document.getElementById("tabela").innerHTML += table;
+			document.getElementById("count").innerHTML += ordersCount;
+			document.getElementById("costPerPerson").innerHTML += costPerPerson;
+			document.getElementById("totalCost").innerHTML += ordersCost;
+
+			document.getElementById("cheese").innerHTML += cheeseCount;
+			document.getElementById("mushrooms").innerHTML += mushroomsCount;
+			document.getElementById("beef").innerHTML += beefCount;
+			document.getElementById("corn").innerHTML += cornCount;
+			document.getElementById("salami").innerHTML += salamiCount;
+			document.getElementById("ham").innerHTML += hamCount;
+			document.getElementById("pepper").innerHTML += pepperCount;
+			document.getElementById("chicken").innerHTML += chickenCount;
+			document.getElementById("olives").innerHTML += olivesCount;
+			document.getElementById("cucumber").innerHTML += cucumberCount;
+		}
+
+		window.onload = loadData;
+	</script>
+
+</body>
+
+</html>
